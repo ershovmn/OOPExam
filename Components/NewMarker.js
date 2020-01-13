@@ -43,10 +43,11 @@ class NewMarker extends React.Component {
         return(
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => this.saveMarker()} style={{flex: 1, alignItems: 'flex-start'}}>
+                    <TouchableOpacity onPress={() => this.saveMarker()} style={{alignItems: 'flex-start'}}>
                         <Ionicons name='md-checkmark-circle' size={45}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.closePage} style={{flex: 1, alignItems: 'flex-end'}}>
+                    <Text style={{fontSize: 30, textAlign: 'center', flex: 1}}>New marker</Text>
+                    <TouchableOpacity onPress={this.closePage} style={{alignItems: 'flex-end'}}>
                         <Ionicons name='md-close-circle' size={45}/>
                     </TouchableOpacity>
                 </View>

@@ -25,6 +25,11 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.ershovmn.oopexam",
+      "versionCode": 1,
+      "permissions": ["LOCATION"]
     }
   }
 }
