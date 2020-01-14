@@ -1,6 +1,7 @@
 import { Alert } from "react-native"
 import MarkerModel from '../Models/MarkerModel'
 import EmailModel from '../Models/EmailModel'
+import store from '../store'
 
 export default class ChainOfResponsibility {
     setNext(next) {
@@ -17,7 +18,7 @@ export class CheckEmail extends ChainOfResponsibility {
         if(data.mapState.markers.length === 0) {
             Alert.alert('Нету маркеров', 'Вы не постаили ни один маркер на карту')
         } else {
-            this.next.handle(data)
+            this.next?.handle(data)
         }
     }
 }
@@ -27,7 +28,7 @@ export class CheckMarkers extends ChainOfResponsibility {
         if(data.settingsState.email.EmailAddress === undefined) {
             Alert.alert('Не указана почта', 'Пожалуйста зайдите в настройки и укажите корректную почту')
         } else {
-            this.next.handle(data)
+            this.next?.handle(data)
         }
     }
 }
@@ -51,5 +52,37 @@ export class SendEmail {
             email.Body = `myPosition: lat: ${myPosition.Latitude} long: ${myPosition.Longitude}, ${res.join('\n')}`
             email.openMail()
         })
+        this.next?.handle(data)
+    }
+}
+
+export class CheckValidEmail extends ChainOfResponsibility {
+    handle(data) {
+        if(!data.emailValid) {
+            Alert.alert('Не указана почта', 'Пожалуйста укажите корректную почту')
+        } else {
+            this.next?.handle(data)
+        }
+    }
+}
+
+export class CheckValidRadius extends ChainOfResponsibility {
+    handle(data) {
+        if(!data.radiusValid) {
+            Alert.alert('Не указан радиус', 'Пожалуйста укажите корректный радиус')
+        } else {
+            this.next?.handle(data)
+        }
+    }
+}
+
+export class SaveSettings extends ChainOfResponsibility {
+    handle(data) {
+        store.dispatch({type: 'SET-SETTINGS',
+            emailAddress: data.emailAddress,
+            radius: data.radius
+        })
+        store.dispatch({type: 'SET-PAGE', page: 'map'})
+        this.next?.handle(data)
     }
 }

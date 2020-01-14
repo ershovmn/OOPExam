@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import {connect} from 'react-redux'
 import store from '../store'
+import { CheckValidEmail, CheckValidRadius, SaveSettings } from '../ChainOfResponsibility';
 
 class Settings extends React.Component {
     constructor() {
@@ -45,19 +46,10 @@ class Settings extends React.Component {
     }
 
     saveSettings() {
-        if(!this.state.emailValid || !this.state.radiusValid) {
-            Alert.alert(
-                'Некорректные данные',
-                'Пожалуйста исправьте все поля, отмеченные красным цветом'
-            )
-            return
-        }
-
-        store.dispatch({type: 'SET-SETTINGS',
-            emailAddress: this.state.emailAddress,
-            radius: this.state.radius
-        })
-        store.dispatch({type: 'SET-PAGE', page: 'map'})
+        var save = new CheckValidEmail()
+        save.setNext(new CheckValidRadius())
+        save.setNext(new SaveSettings())
+        save.handle(this.state)
     }
 
     deleteAllMarkers() {
