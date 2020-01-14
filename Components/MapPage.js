@@ -41,7 +41,7 @@ class MapPage extends React.Component {
         var markers = this.props.globalState.mapState.markers
         return markers.map((marker, index) => {
             return (
-                <Marker draggable title={marker.Name} coordinate={marker.Coords()} key={index}/>
+                <Marker title={marker.Name} coordinate={marker.Coords()} key={index}/>
             )
         })
     }

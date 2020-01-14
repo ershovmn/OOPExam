@@ -32,9 +32,14 @@ export class SendEmail {
             var flag = true
             var myPosition = new MarkerModel(pos.coords.latitude, pos.coords.longitude)
             data.mapState.markers.map(marker => {
+                console.log(myPosition.Distance(marker), parseFloat(data.settingsState.radius))
                 flag = flag && (myPosition.Distance(marker) <= parseFloat(data.settingsState.radius))
             })
-            if(!flag) return
+            console.log(flag)
+            if(!flag) {
+                Alert.alert('Какой-то маркер вне радиуса', 'Вы можете удалить все маркеры')
+                return
+            }
             var res = data.mapState.markers.map((marker, index) => {
                 return `${index}) lat: ${marker.Latitude} long: ${marker.Longitude}`
             })
