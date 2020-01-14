@@ -19,7 +19,7 @@ class EmailModel {
             subject: this.Subject,
             body: this.Body,
         })
-
+        
         if (query.length) {
             url += `?${query}`;
         }
