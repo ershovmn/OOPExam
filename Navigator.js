@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { View } from 'react-native'
 
 import MapPage from './Components/MapPage'
-import Settings from './Components/Settings'
+import SettingsPage from './Components/SettingsPage'
 import ShowMarkers from './Components/ShowMarkers'
 import NewMarker from './Components/NewMarker'
 
@@ -13,7 +13,7 @@ class Navigator extends React.Component {
         return (
             <View style={{flex: 1, width: '100%'}}>
                 {this.props.page === 'map' ? <MapPage /> : null}
-                {this.props.page === 'settings' ? <Settings /> : null}
+                {this.props.page === 'settings' ? <SettingsPage /> : null}
                 {this.props.page === 'markers' ? <ShowMarkers /> : null}
                 {this.props.page === 'newmarker' ? <NewMarker /> : null}
             </View>
