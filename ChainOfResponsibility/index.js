@@ -3,15 +3,7 @@ import MarkerModel from '../Models/MarkerModel'
 import EmailModel from '../Models/EmailModel'
 import store from '../store'
 
-export default class ChainOfResponsibility {
-    setNext(next) {
-        if(this.next === undefined) {
-            this.next = next
-        } else {
-            this.next.setNext(next)
-        }
-    }
-}
+import ChainOfResponsibility from './ChainOfResponsiblity'
 
 export class CheckEmail extends ChainOfResponsibility {
     handle(data) {
