@@ -67,6 +67,7 @@ class Settings extends React.Component {
                     <TouchableOpacity onPress={() => this.saveSettings()} style={{flex: 1, alignItems: 'flex-start'}}>
                         <Ionicons name='md-checkmark-circle' size={45}/>
                     </TouchableOpacity>
+                    <Text style={{fontSize: 30, textAlign: 'center', flex: 1}}>Settings</Text>
                     <TouchableOpacity onPress={this.closePage} style={{flex: 1, alignItems: 'flex-end'}}>
                         <Ionicons name='md-close-circle' size={45}/>
                     </TouchableOpacity>
