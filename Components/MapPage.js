@@ -4,10 +4,8 @@ import {connect} from 'react-redux'
 import MapView, {Marker} from 'react-native-maps'
 import { Ionicons } from '@expo/vector-icons'
 
-import MarkerModel from '../Models/MarkerModel'
-import EmailModel from '../Models/EmailModel'
-
 import store from '../store'
+import { CheckEmail, CheckMarkers, SendEmail } from '../ChainOfResponsibility';
 
 
 class MapPage extends React.Component {
@@ -53,30 +51,10 @@ class MapPage extends React.Component {
     }
 
     trySendEmail() {
-        if(this.props.globalState.mapState.markers.length === 0) {
-            Alert.alert('Нету маркеров', 'Вы не постаили ни один маркер на карту')
-            return
-        }
-        if(this.props.globalState.settingsState.email.EmailAddress === undefined) {
-            Alert.alert('Не указана почта', 'Пожалуйста зайдите в настройки и укажите корректную почту')
-            return
-        }
-        navigator.geolocation.getCurrentPosition(pos => {
-            var flag = true
-            var myPosition = new MarkerModel(pos.coords.latitude, pos.coords.longitude)
-            this.props.globalState.mapState.markers.map(marker => {
-                flag = flag && (myPosition.Distance(marker) <= parseFloat(this.props.globalState.settingsState.radius))
-            })
-            if(!flag) return
-            var res = this.props.globalState.mapState.markers.map((marker, index) => {
-                return `${index}) lat: ${marker.Latitude} long: ${marker.Longitude}`
-            })
-            var email = new EmailModel(this.props.globalState.settingsState.email.EmailAddress)
-            
-            email.Subject = 'GPS coordinates'
-            email.Body = `myPosition: lat: ${myPosition.Latitude} long: ${myPosition.Longitude}, ${res.join('\n')}`
-            email.openMail()
-        })
+        var sendemail = new CheckEmail()
+        sendemail.setNext(new CheckMarkers())
+        sendemail.setNext(new SendEmail())
+        sendemail.handle(this.props.globalState)
     }
 
     changeRegion(e) {
