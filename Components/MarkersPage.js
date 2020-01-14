@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import store from '../store';
 import MarkerItem from './MarkerItem';
 
-class ShowMarkers extends React.Component {
+class MarkersPage extends React.Component {
     closePage() {
         store.dispatch({type: 'SET-PAGE', page: 'settings'})
     }
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect((state) => {return {globalState: state}})(ShowMarkers)
+export default connect((state) => {return {globalState: state}})(MarkersPage)

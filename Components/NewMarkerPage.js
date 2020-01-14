@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, TextInput, Alert} from 'react-native';
 import {connect} from 'react-redux'
-import MapView, {Marker} from 'react-native-maps'
 import { Ionicons } from '@expo/vector-icons'
 
-import MarkerModel from '../Models/MarkerModel'
 import store from '../store';
+import { CheckMarkerName, SaveNewMarker } from '../ChainOfResponsibility';
 
-class NewMarker extends React.Component {
+class NewMarkerPage extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -22,17 +21,13 @@ class NewMarker extends React.Component {
     }
 
     saveMarker() {
-        if(this.state.value ===  '') {
-            Alert.alert(
-                'Некорректные данные',
-                'Пожалуйста введите название маркера'
-            )
-            return
-        }
-
-        var marker = new MarkerModel(this.props.latitude, this.props.longitude, this.state.value)
-        marker.AddToMap()
-        this.closePage()
+        var save = new CheckMarkerName()
+        save.setNext(new SaveNewMarker())
+        save.handle({
+            latitude: this.props.latitude,
+            longitude: this.props.longitude,
+            value: this.state.value
+        })
     }
 
     closePage() {
@@ -132,4 +127,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(state => {return {latitude: state.mapState.newMarker.latitude, longitude: state.mapState.newMarker.longitude}})(NewMarker)
+export default connect(state => {return {latitude: state.mapState.newMarker.latitude, longitude: state.mapState.newMarker.longitude}})(NewMarkerPage)

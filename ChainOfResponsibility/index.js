@@ -86,3 +86,22 @@ export class SaveSettings extends ChainOfResponsibility {
         this.next?.handle(data)
     }
 }
+
+export class CheckMarkerName extends ChainOfResponsibility {
+    handle(data) {
+        if(data.value ===  '') {
+            Alert.alert('Некорректные данные', 'Пожалуйста введите название маркера')
+        } else {
+            this.next?.handle(data)
+        }
+    }
+}
+
+export class SaveNewMarker extends ChainOfResponsibility {
+    handle(data) {
+        var marker = new MarkerModel(data.latitude, data.longitude, data.value)
+        marker.AddToMap()
+        store.dispatch({type: 'SET-PAGE', page: 'map'})
+        this.next?.handle(data)
+    }
+}
