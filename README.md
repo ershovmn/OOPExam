@@ -21,9 +21,4 @@ tunnel
 
 Если все маркеры находятся в радиусе от пользователя, то формируется эл письмо с координатами маркеров.
 ## Итог. Скрины
-![2](./screenshots/1.jpg)
-![2](./screenshots/2.jpg)
-![2](./screenshots/3.jpg)
-![2](./screenshots/4.jpg)
-![2](./screenshots/5.jpg)
-![2](./screenshots/6.jpg)
+![2](./screenshots/all.png)
