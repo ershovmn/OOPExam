@@ -29,7 +29,10 @@
     "android": {
       "package": "com.ershovmn.oopexam",
       "versionCode": 1,
-      "permissions": ["LOCATION"]
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
     }
   }
 }
